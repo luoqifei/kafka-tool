@@ -2,12 +2,44 @@ package com.luoqifei.kafka;
 
 import com.luoqifei.kafka.client.Consumer;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 import java.util.Scanner;
 
 public class WelcomeEntrance {
+
     public static void main(String[] args) throws InterruptedException {
+        if (args == null || args.length<4){
+            System.out.println("please input [bootstrap.servers] [topicName] [startTime yyyyMMddHHmmss] [endTime yyyyMMddHHmmss]");
+            System.out.println("for example: localhost:9092,localhost2:9092 testopic 20190101182234 20190101190145");
+        }
+        String bootstrapServers = args[0];
+        String topic = args[1];
+        String groupId = "count-topic-messages";
+        String startTime = args[2];
+        String endTime = args[3];
+        Properties properties = new Properties();
+        properties.put("bootstrap.servers", bootstrapServers);
+        properties.put("group.id", groupId);
+        properties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        properties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        Consumer consumer = new Consumer(properties);
+        consumer.setTopic(topic);
+        Thread.sleep(3000);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        long start = 0;
+        long end = 0;
+        try {
+            start = sdf.parse(startTime).getTime();
+            end = sdf.parse(endTime).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        consumer.countMessageNumber(start,end);
+    }
+    public static void main1(String[] args) throws InterruptedException {
         System.out.println(new Date()+ " | Hello , welcome in kafka-tools world. I am very young but helpful, what can i do as follow : ");
         note:
         while (true){

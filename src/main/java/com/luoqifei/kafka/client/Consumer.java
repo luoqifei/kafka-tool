@@ -53,15 +53,15 @@ public class Consumer {
     public static void main(String[] args) {
 
         Properties properties = new Properties();
-        properties.put("bootstrap.servers", "localhost:9092");
+        properties.put("bootstrap.servers", "192.168.238.128:9092");
         properties.put("group.id", "count-message-number");
         properties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         properties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         Consumer consumer = new Consumer(properties);
-        String topicName = "test";
+        String topicName = "test3";
         consumer.setTopic(topicName);
         long start = 1543126500000L;
-        long end = 1543126660000L;
+        long end =   1543291054000L;
 
         logger.info(">>>>  There are " + consumer.countMessageNumber(start, end)
                 + " messages between " + start + " and " + end + " timestamp.");
@@ -91,7 +91,7 @@ public class Consumer {
                 endTimestampsToSearch.put(new TopicPartition(partitionInfo.topic(), partitionInfo.partition()), end);
             }
 
-            consumer.assign(topicPartitions);
+          //  consumer.assign(topicPartitions);
 
             /*
             Look up the offsets for the given partitions by timestamp.
@@ -137,7 +137,8 @@ public class Consumer {
                     // set offset to get message
                     //consumer.seek(entry.getKey(), startOffset);
                 } else {
-                    logger.error(">>>>  The start time stamp great than the latest time stamp.");
+                    //logger.error(">>>>  The start time stamp great than the latest time stamp.");
+                    logger.error(">>>>  can't get the OffsetAndTimestamp by start time "+start);
                     return 0;
                 }
             }
