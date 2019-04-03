@@ -73,10 +73,10 @@ public class MyProducerClient {
 //            System.out.println("Enter topic name");
 //            return;
 //        }
-        String topicName = "test3";
+        String topicName = "test";
         Properties props = new Properties();
         //Assign localhost id
-        props.put("bootstrap.servers", "192.168.238.128:9092");
+        props.put("bootstrap.servers", "127.0.0.1:9095");
         //Set acknowledgements for producer requests.
         props.put("acks", "all");
         //If the request fails, the producer can automatically retry,
@@ -93,9 +93,12 @@ public class MyProducerClient {
 
         Producer<String, String> producer = new KafkaProducer
                 <String, String>(props);
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 100000000; i++) {
+            System.out.println(i);
             producer.send(new ProducerRecord<String, String>(topicName,
                     Integer.toString(i), Integer.toString(i)));
+            Thread.sleep(100);
+        }
         System.out.println("Message sent successfully");
         producer.close();
     }

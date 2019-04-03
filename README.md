@@ -17,3 +17,6 @@ mvn clean package
 ## run
 
 java -jar kafka-tools-lqf-jar-with-dependencies.jar
+
+##attach add kafka security producer and consumer client demo
+##attach add java shell control remote cluster authorizer and acls demo

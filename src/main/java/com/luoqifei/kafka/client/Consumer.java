@@ -53,15 +53,15 @@ public class Consumer {
     public static void main(String[] args) {
 
         Properties properties = new Properties();
-        properties.put("bootstrap.servers", "192.168.238.128:9092");
+        properties.put("bootstrap.servers", "127.0.0.1:9092");
         properties.put("group.id", "count-message-number");
         properties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         properties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         Consumer consumer = new Consumer(properties);
         String topicName = "test3";
         consumer.setTopic(topicName);
-        long start = 1543126500000L;
-        long end =   1543291054000L;
+        long start = 1543368822000L;
+        long end =   1543368823000L;
 
         logger.info(">>>>  There are " + consumer.countMessageNumber(start, end)
                 + " messages between " + start + " and " + end + " timestamp.");
